@@ -1,2 +1,3 @@
 # nodejs-book-lecture
-nodejs study
+
+# Node.js 교과서 - 인프런 강의
