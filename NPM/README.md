@@ -20,9 +20,9 @@ pacakage-lock.json을 살펴보면 굉장히 코드가 길다. 이 코드들은 
 
 npm에서 설치한 모듈은 3부분으로 버전이 나누어져 있다. 앞에서부터 순서대로 major(주버전), minor(부버전), patch(수버전) 이라고 한다.
 
--major: 대대적인 수정으로 기존코드가 실행되지 않을 수 있다. 하위버전과 호환되지 않는 수정 사항이 생겼을 경우에 올린다.
--minor: 수정은 생겼지만 하위버전과 호환이 되어서 실행에 문제없다.
--patch: 마이너한 버그 수정
+- major: 대대적인 수정으로 기존코드가 실행되지 않을 수 있다. 하위버전과 호환되지 않는 수정 사항이 생겼을 경우에 올린다.
+- minor: 수정은 생겼지만 하위버전과 호환이 되어서 실행에 문제없다.
+- patch: 마이너한 버그 수정
 
 ### ❗️ package.json에서 버전 고정시키는 법
 
@@ -34,21 +34,21 @@ npm에서 설치한 모듈은 3부분으로 버전이 나누어져 있다. 앞�
 
 ### ❗️ Tip - 설치시에 버전
 
-npm i express@latest - 가장 최신버전으로 설치.
-npm i express@3.23.1 - 정확히 버전으로 설치.
-npm i express@3 - major만 적어도 된다.
-npm i express@next - 앞으로 나올 버전을 미리 사용. npm info를 통해 next버전이 있는지 확인 가능.
+- npm i express@latest - 가장 최신버전으로 설치.
+- npm i express@3.23.1 - 정확히 버전으로 설치.
+- npm i express@3 - major만 적어도 된다.
+- npm i express@next - 앞으로 나올 버전을 미리 사용. npm info를 통해 next버전이 있는지 확인 가능.
 
 ## 4️⃣ npm 명령어들
 
-npm info - 해당 모듈의 정보. next버전이 있는지도 확인가능.
-npm uninstall - 설치 제거.
-npm search - npm웹사이트에서 모듈 검색하는 것과 같음.
-npm adduser, npm login - 로그인 (npm에 배포하기 위해서).
-npm whoami 현재 사용자가 누구인지 알려줌.
-npm logout - 로그아웃.
-npm version - major,minor,patch 중 입력시 해당 버전이 1씩 올라감.
-npm deprecate 패키지명||버전||메시지 - 치명적인 버그가 있을때, 해당 버전 사용금지를 알리기 위해 사용.
-npm publish - 패키지 배포.
-npm unpublish - 배포 중단(배포 후 72시간 내에만 가능) --force붙여줘야함.
-npm ls - 현재폴더의 패키지 정보.
+- npm info - 해당 모듈의 정보. next버전이 있는지도 확인가능.
+- npm uninstall - 설치 제거.
+- npm search - npm웹사이트에서 모듈 검색하는 것과 같음.
+- npm adduser, npm login - 로그인 (npm에 배포하기 위해서).
+- npm whoami 현재 사용자가 누구인지 알려줌.
+- npm logout - 로그아웃.
+- npm version - major,minor,patch 중 입력시 해당 버전이 1씩 올라감.
+- npm deprecate 패키지명||버전||메시지 - 치명적인 버그가 있을때, 해당 버전 사용금지를 알리기 위해 사용.
+- npm publish - 패키지 배포.
+- npm unpublish - 배포 중단(배포 후 72시간 내에만 가능) --force붙여줘야함.
+- npm ls - 현재폴더의 패키지 정보.
