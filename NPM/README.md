@@ -1,6 +1,6 @@
 # NPM(Node Package Manager)
 
-## npm이란?
+## 1️⃣ npm이란?
 
 다른 사람들이 만들어 놓은 소스코드를 모아둔 저장소이다. "바퀴를 재발명 하지말라"는 말이 있듯이, 이미 만들어져있는 걸 다시 만들지말고 가져와서 사용하게끔 만들어 놓은것이다. npm에는 100만개가 넘는 패키지가 있고, 모든 언어 통틀어서도 가장 많은 패키지를 가지고 있다.
 
@@ -10,13 +10,13 @@ node프로젝트는 대부분 npm을 사용하기 때문에 npm init을 통해 p
 
 또, npm i -g로 글로벌에 설치할 수 있다. 글로벌에 설치가 되면, 명령어에서 사용가능해진다. 하지만, package.json어디에도 저장이 되지 않기 때문에 다른 사람이 내 코드를 사용할때, 글로벌로 설치된 모듈을 알지 못하게 된다. 그러므로 자주 사용하지 않지만, 사용해야한다면 npx로 실행하여 글로벌과 똑같은 효과를 볼 수 있다
 
-## npm i을 하면 node_modules폴더와 package-lock.json파일이 생성된다.
+## 2️⃣ npm i을 하면 node_modules폴더와 package-lock.json파일이 생성된다.
 
 node_modules는 install한 모듈이 모아져있는 폴더이다. 그렇지만, 설치하지 않은 모듈까지 있는 이유는 무엇일까? 현재 install한 모듈도 하나의 프로젝트이기 때문에 dependencies에 있는 모듈도 같이 설치가 되기 때문이다. express로 예를 든다면, 나는 express모듈 하나만 install했지만, express모듈을 만들기 위해서 사용한 모듈도 굉장히 많기 때문에 express를 install하면 그 안의 모듈들도 모두 install된다. 이와 같이 node_modules의 용량은 크기 때문에 배포를 하기전에는 삭제를 해주고, 배포서버에 package.json을 통해 install 해주는게 좋다.
 
 pacakage-lock.json을 살펴보면 굉장히 코드가 길다. 이 코드들은 위와같이 express를 설치하면서 같이 설치된 모듈들의 version이 모두 표기되어있는 파일이다. 즉, ependency의 dependency 버전이 기입되어있다.
 
-## npm은 Sem ver 버저닝을 사용한다.
+## 3️⃣ npm은 Sem ver 버저닝을 사용한다.
 
 npm에서 설치한 모듈은 3부분으로 버전이 나누어져 있다. 앞에서부터 순서대로 major(주버전), minor(부버전), patch(수버전) 이라고 한다.
 
@@ -24,7 +24,7 @@ npm에서 설치한 모듈은 3부분으로 버전이 나누어져 있다. 앞�
 -minor: 수정은 생겼지만 하위버전과 호환이 되어서 실행에 문제없다.
 -patch: 마이너한 버그 수정
 
-### package.json에서 버전 고정시키는 법
+### ❗️ package.json에서 버전 고정시키는 법
 
 버전맨앞에 사용해주면 된다. ex) "^1.21.0"
 
@@ -32,14 +32,14 @@ npm에서 설치한 모듈은 3부분으로 버전이 나누어져 있다. 앞�
 - ~ : major, minor버전을 고정시켜준다.
 - : major, minor, patch버전을 고정시켜준다.
 
-### Tip - 설치시에 버전
+### ❗️ Tip - 설치시에 버전
 
 npm i express@latest - 가장 최신버전으로 설치.
 npm i express@3.23.1 - 정확히 버전으로 설치.
 npm i express@3 - major만 적어도 된다.
 npm i express@next - 앞으로 나올 버전을 미리 사용. npm info를 통해 next버전이 있는지 확인 가능.
 
-## npm 명령어들
+## 4️⃣ npm 명령어들
 
 npm info - 해당 모듈의 정보. next버전이 있는지도 확인가능.
 npm uninstall - 설치 제거.
