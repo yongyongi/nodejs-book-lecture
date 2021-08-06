@@ -5,6 +5,10 @@
     <meta charset="utf-8" />
   </head>
   <body>
-    hi index.html
+    <form action="/upload" method="post" entype="multipart/form-data">
+      <input type="file" name="image" />
+      <input type="text" name="title" />
+      <button type="submit">업로드</button>
+    </form>
   </body>
 </html>

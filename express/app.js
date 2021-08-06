@@ -12,11 +12,20 @@ app.set("port", process.env.PORT || 3000);
 
 app.use(morgan("dev"));
 // app.use(path.join(__dirname, express.static(__dirname, "public")));
-
 app.use(cookieParser("yongyongi"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session());
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: "yongyongi",
+    cookie: {
+      httpOnly: true,
+    },
+    name: "connect.sid",
+  })
+);
 // app.use(multer().array());
 
 app.use((req, res, next) => {
@@ -26,10 +35,11 @@ app.use((req, res, next) => {
   // next()를 해주면 다음 미들웨어로 넘어가 실행시킨다.
 });
 app.get("/", (req, res) => {
+  // res.sendFile(path.join(__dirname, "index.html"));
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.post("/", (req, res) => {
+app.post("/upload", (req, res) => {
   res.send("post message");
 });
 
