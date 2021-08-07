@@ -1,9 +1,14 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const path = require("path"); //경로를 좀 더 명확히 하고 싶을때 사용.
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 // const multer = require("multer");
+dotenv.config();
+
+const indexRouter = require("./routes");
+const userRouter = require("./routes/user");
 const app = express();
 // console.log(Object.keys(require.cache));
 
@@ -12,14 +17,14 @@ app.set("port", process.env.PORT || 3000);
 
 app.use(morgan("dev"));
 // app.use(path.join(__dirname, express.static(__dirname, "public")));
-app.use(cookieParser("yongyongi"));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     resave: false,
     saveUninitialized: false,
-    secret: "yongyongi",
+    secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
     },
@@ -28,12 +33,15 @@ app.use(
 );
 // app.use(multer().array());
 
-app.use((req, res, next) => {
-  console.log("미들웨어");
-  next();
-  // next()를 해주지 않으면 현재 미들웨어까지만 실행되지만,
-  // next()를 해주면 다음 미들웨어로 넘어가 실행시킨다.
-});
+// app.use((req, res, next) => {
+//   console.log("미들웨어");
+//   next();
+//   // next()를 해주지 않으면 현재 미들웨어까지만 실행되지만,
+//   // next()를 해주면 다음 미들웨어로 넘어가 실행시킨다.
+// });
+app.use("/", indexRouter);
+app.use("/user", userRouter);
+
 app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname, "index.html"));
   res.sendFile(path.join(__dirname, "index.html"));
