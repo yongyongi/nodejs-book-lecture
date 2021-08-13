@@ -1,16 +1,49 @@
+const { config } = require("dotenv");
+config();
+
 const morgan = require("morgan");
 const express = require("express");
+const path = require("path");
+const nunjucks = require("nunjucks");
+
+//데이터베이스 불러오기
+const { sequelize } = require("./models");
 
 const app = express();
 
-const port = 8080;
+app.set("port", process.env.PORT || 8080);
+app.set("view engine", "html");
+nunjucks.configure("views", {
+  express: app,
+  watch: true,
+});
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("데이터베이스 연결 성공");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.status(200).send("hello world");
+app.use((req, res, next) => {
+  const error = new Error(`${req.method} ${req.url} 라우터가 없습니다`);
+  error.status = 404;
+  next(error);
 });
 
-app.listen(port, () => {
-  console.log("서버가 연결되었습니다.");
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
+  res.status(err.status || 500);
+  res.render("error");
+});
+
+app.listen(app.get("port"), () => {
+  console.log(app.get("port"), "서버가 연결되었습니다.");
 });
