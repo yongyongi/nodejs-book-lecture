@@ -1,5 +1,4 @@
-const { Sequelize } = require("sequelize");
-const Sqeuelize = require("sequelize");
+const Sequelize = require("sequelize");
 
 module.exports = class User extends (
   Sequelize.Model
@@ -7,6 +6,7 @@ module.exports = class User extends (
   static init(sequelize) {
     //init의 첫번째 요소는 모델정의, 두번째요소는 모델에 대한 설정
     return super.init(
+      //table이랑 모델이랑 연결
       {
         //id 컬럼은 자동으로 넣어주므로 생략 가능
         name: {
@@ -43,6 +43,11 @@ module.exports = class User extends (
         collate: "utf8mb4_general_ci",
       }
     );
+  }
+
+  static associate(db) {
+    //내 id를 commenter가 참조하려고한다.
+    db.User.hasMany(db.Comment, { foreignKey: "commenter", sourceKey: "id" }); //foreignkey가 참조하려는 테이블, sourcekey가 내 테이블
   }
 };
 
