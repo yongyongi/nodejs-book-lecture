@@ -31,13 +31,50 @@ N:M관계
 
 게시글과 해시태그 테이블
 
+## CRUD
+
+- 생성
+
 INSERT INTO nodejs.users (name, age, married, comment) VALUES ("yong", 29, 0, "자기소개");
 => create로 생성
 
+- 조회
+
 SELECT \* FROM nodejs.users;
-=> findAll로 조회
+=> User.findAll({})로 조회
 
 SELECT name, married FROM nodejs.users;
-=> findAll({
+=> User.findAll({
 attributes:["name", "married"],
 })
+
+SELECT name, age FROM nodejs.users WHERE married = 1 AND age > 30;
+=> User.findAll({
+attributes: ["id","name"],
+where: {
+married : true,
+age: {[Op.gt]: 30},
+},
+})
+
+부등호는 Op안에 있다. sequlize에서 Op를 불러온다.
+
+- 수정
+
+UPDATE nodejs.users SET comment = "바꿀 내용" WHERE id = 2;
+=> User.update({
+comment: "바꿀 내용",
+}, {
+where: {id:2}
+})
+
+- 삭제
+
+DELETE FROM nodejs.users WHERE id = 2;
+User.detroy({
+where:{id:2},
+})
+
+- Op
+
+* Op안의 객체들 => gt, lt, gte, lte, in, ne
