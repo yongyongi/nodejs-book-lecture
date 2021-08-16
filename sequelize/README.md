@@ -75,6 +75,17 @@ User.detroy({
 where:{id:2},
 })
 
-- Op
+### Op
 
-* Op안의 객체들 => gt, lt, gte, lte, in, ne
+- Op안의 객체들 => gt, lt, gte, lte, in, ne
+
+## 관계 쿼리
+
+const user = await User.findOne({
+include:[{
+model:Comment,
+}]
+});
+console.log(user.Comments) // hasmany관계라면 자동으로 복수형으로 바뀐다.
+
+include안에서도 where나 attributes를 사용할 수 있다.
