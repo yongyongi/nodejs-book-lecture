@@ -66,3 +66,37 @@ db.users.update({name:"yong"},{$set:{comment:"하이요"}})
 db.users.remove({name:"yong"})
 
 ### mysql과 같이 관계를 지어주려면 user의 ObjectId를 복사해서 comment의 commenter필드와 같이 한 필드에 붙여넣으면 연결이 된다. 하지만 foreign key처럼 완전히 관계를 시켜주는게 아니므로 mongoDB는 항상 오타를 주의해야한다.
+
+## mongoose
+
+mysql의 sequelize과 비슷, mongoose는 ODM(Object Document mapping)으로 ORM과 비슷한 의미이다. sequelize는 mysql의 쿼리를 자바스크립트를 다룰 수 있게 하기 위해 사용하지만 mongoDB는 자바스크립트 언어로 데이터를 다룰 수 있는데 왜 ODM을 사용 하는 걸까? 이유는 mongoose에는 mongoDB에서 지원하지 않는 기능들이 많기 때문이다. 특히 mongoose를 사용하면 mysql의 스키마를 표현할 수 있다. 즉, JOIN을 할 수 있다. 아이러니하게도 mongoose에서 지원하는 기능들을 사용하다보면 sql을 사용하는 것과 차이가 없게 된다. 그래서 나는 sql, nosql에서 각각 ORM, ODM 프레임워크를 사용한다면, 차별점을 확장성에 둔다. 수직확장으로 하면 유리한지, 수평확장으로 하면 유리한지.
+
+## mongoose로 mongoDB 연결
+
+```
+// 개발 모드일때, 쿼리가 로그로 뜨게 하는 코드
+const connect = () => {
+    if(process.env.NODE_ENV !== "production"){
+        mongoose.set("debug",true)
+    }
+}
+mongoose.connect("mongodb://사용자:비밀번호@loaclhost:27017/admin",{
+    dbName: "nodejs",
+    useNewUrlParser:true, // 버전이 바뀌면서 설정해야하는 부분
+    useCreateIndex: true, // 번전이 바뀌면서 설정해야하는 부분
+}, (err) => {
+    if(err) {
+        console.log(err)
+    } else {
+        console.log("연결 성공")
+    }
+})
+```
+
+## mongoose의 스키마
+
+두 테이블의 관계를 만들어줄떄, N인쪽에 ref로 참조할 테이블명을 저장한다. ref로 관계를 지어놓으면 populate를 사용하여 테이블 JOIN이 가능하다. ref로 관계를 맺어주지 않고, 참조할 테이블의 객체를 그대로 작성하는 경우(Nested Object)도 있지만, 데이터의 중복이 생기고, 변경될 경우 하나씩 직접 바꿔줘야하기 때문에 ObjectId의 populate를 사용하면 이 문제를 해결한다. 하지만, populate는 자바스크립트로 돌아가기 때문에 속도가 느린 단점이 있다. 방법마다 각각 장단점이 있기 때문에 서비스의 특성에 따라 선택하여 사용하면 된다.
+
+데이터의 수정이 많을것 같다면, ObjectId의 populate를 사용하는게 좋을 것 같고, 데이터의 수정이 거의 없을 것 같다면, Nested Object를 사용하는게 좋을 것 같다.
+
+mongoose를 사용하여 스키마를 만들면, sequelize와 같이 데이터 타입과 옵션을 지정할 수 있다.
