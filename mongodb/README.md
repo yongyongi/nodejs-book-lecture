@@ -100,3 +100,23 @@ mongoose.connect("mongodb://사용자:비밀번호@loaclhost:27017/admin",{
 데이터의 수정이 많을것 같다면, ObjectId의 populate를 사용하는게 좋을 것 같고, 데이터의 수정이 거의 없을 것 같다면, Nested Object를 사용하는게 좋을 것 같다.
 
 mongoose를 사용하여 스키마를 만들면, sequelize와 같이 데이터 타입과 옵션을 지정할 수 있다.
+
+## mongoose의 join기능
+
+mongoose에는 populate로 join기능과 비슷하게 구현할 수 있다.
+
+comments라는 컬렉션에 commenter라는 참조 필드가 있다고 치자. comments를 find하면 단순히 commenter의 아이디만 조회가 되지만, populate로 이어주면 commenter 컬렉션의 필드들도 모두 조회할 수 있다.
+
+Comment.find().populate("commenter")
+=> commenter안의 필드들도 모두 조회 된다.
+
+Comment.populate(특정다큐먼트, {path:"commenter"})
+=> Comment컬렉션의 특정다큐먼트의 commenter를 가져올때
+
+## mongoose에서는 Update할때, set을 사용하지 않는다.
+
+## 기타
+
+1. 데이터베이스 성능 향상을 위해서 index를 사용한다. 이건 데이터베이스에서 따로 공부하기
+
+2. 실제 서비스에서 find({})를 조심하자. 코드는 그대로인데 데이터가 쌓일수록 느려진다. 데이터가 많아지면 전체 조회보다는 게시판에서 20개씩 보이는 것 처럼 끊어서 데이터를 전달하면 속도 향상에 좋다.

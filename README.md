@@ -1,4 +1,4 @@
-# nodejs-book-lecture
+# nodejs-note
 
 # Node.js 교과서 - 인프런 강의
 
