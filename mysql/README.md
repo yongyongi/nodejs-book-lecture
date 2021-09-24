@@ -8,11 +8,29 @@
 mysql -h localhost -u root -p
 h 호스트, u 사용자, p 패스워드
 
-### 데이터베이스 생성
+### 데이터베이스 쿼리
 
-기본적으로는 'CREATE DATABASE DB명'을 하면 되지만, 한글을 많이 사용할 경우 가급적이면 default character set utf8; 을 해주자.
+- 생성
 
-### 테이블 생성
+CREATE DATABASE DB명;
+=> 위의 쿼리만 작성해주어도 되지만, 한글을 많이 사용할 경우 가급적이면 default character set utf8;을 추가로 작성해주자.
+
+- 확인
+
+SHOW DATABASES;
+=> 모든 데이터베이스 조회
+
+- 선택
+
+USE DB명;
+=> 해당 데이터베이스 선택
+
+- 삭제
+
+DROP DATABASE DB명;
+=> 해당 데이터베이스 삭제
+
+### 테이블 생성 및 조회
 
 CREATE TABLE 데이터베이스명.테이블 이름 (
 필드이름1 필드타입1,
@@ -46,6 +64,9 @@ DEFAULT CHARSET=utf8mb4: 기본설정, 이모티콘도 사용하고 싶다면 mb
 ENGINE=InnoDB; => 알아보기
 
 정규화 공부를 통해 관계에 대한 원칙을 알아보자.
+
+show tables;
+=> 현재 데이타베이스의 테이블 조회
 
 ---
 
