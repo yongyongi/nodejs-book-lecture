@@ -5,10 +5,14 @@ const path = require("path");
 const session = require("express-session");
 const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
+const passport = require("passport");
 
 //dotenv.config()는 process.env에 설정파일을 넣기 위해서 제일 상단에 배치한다.
 dotenv.config();
 const pageRouter = require("./routes/page");
+const authRouter = require("./routes/auth");
+const { sequelize } = require("./models");
+const passportConfig = require("./passport");
 
 const app = express();
 
@@ -20,6 +24,18 @@ nunjucks.configure("views", {
   watch: true,
 });
 
+//force:true는 모델이 변경되었을때, 테이블을 지웠다가 다시 만들어줌(데이터 날라감)
+//데이터를 날리지 않고 변경하려면, alter:true로 설정!
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("데이터베이스 연결 성공");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+passportConfig();
 // 6장 참고.
 app.use(morgan("dev")); //요청 로그
 app.use(express.static(path.join(__dirname, "public")));
@@ -37,8 +53,12 @@ app.use(
     },
   })
 );
+//세션을 받아서 실행 되어야하기 때문에 항상 express-session밑에 코드가 있어야한다.
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", pageRouter);
+app.use("/auth", authRouter);
 
 // "/" 경로가 아닌 경로는 404에러로 처리
 app.use((req, res, next) => {

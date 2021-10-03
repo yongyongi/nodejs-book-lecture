@@ -38,7 +38,11 @@ module.exports = class User extends (
       {
         sequelize,
         timestamps: true,
+        //underscored true는 created_at, updated_at으로 표기
+        // false는 createdAt, updatedAt
         underscored: false,
+        //modelName 자바스크립트에서 사용하는 모델, tableName은 실제 데이터베이스 테이블명
+        //보통 modelName은 첫번째만 대문자로 단수로 적고, tableName은 복수형으로 작성한다.
         modelName: "User",
         tableName: "users",
         //paranoid를 설정하면, deletedAt이 생성된다.
@@ -55,6 +59,8 @@ module.exports = class User extends (
   static associate(db) {
     db.User.hasMany(db.Post);
     db.User.belongsToMany(db.User, {
+      //다대다 관계, User테이블과 User테이블 관계이므로 foreignKey를 서로 다른 것으로 지정해주어야한다.
+      //여기서 through은 조인테이블 명이다.
       foreignKey: "followingId",
       as: "Followers",
       through: "Follow",
